@@ -1,4 +1,4 @@
-const CACHE = 'gg-khata-v2';
+const CACHE = 'gg-khata-v3';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './gg-logo.png', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
