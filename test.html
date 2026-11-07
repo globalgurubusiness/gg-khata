@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GG Khata — Phone Test</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; background: #fdf6ec; color: #333; }
+  h2 { color: #651c2b; }
+  .row { background: #fff; border: 1px solid #e5d9c5; border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: 16px; }
+  .ok { color: #1a7a2e; font-weight: bold; }
+  .bad { color: #c0392b; font-weight: bold; }
+  .wait { color: #999; }
+  #ua { font-size: 12px; word-break: break-all; color: #666; }
+  button { background: #651c2b; color: #fff; border: none; padding: 12px 22px; border-radius: 10px; font-size: 16px; }
+</style>
+</head>
+<body>
+<h2>GG Khata — Phone Test</h2>
+<p>Is page ko khula rakho, saare test khud chalein ge. Phir is ka screenshot bhejo.</p>
+
+<div class="row">1. Basic JavaScript: <span id="t1" class="wait">checking...</span></div>
+<div class="row">2. Firebase (internet se code load): <span id="t2" class="wait">checking...</span></div>
+<div class="row">3. Phone Storage (IndexedDB): <span id="t3" class="wait">checking...</span></div>
+<div class="row">4. Button click test: <button id="btn">Tap Me</button> <span id="t4" class="wait">button dabao</span></div>
+<div class="row">Phone/Browser info:<br><span id="ua"></span></div>
+
+<script>
+  // Test 1 + 4 + UA: plain script — ye chale to basic JS theek hai
+  document.getElementById('ua').textContent = navigator.userAgent;
+  document.getElementById('t1').innerHTML = '<span class="ok">OK ✓</span>';
+  document.getElementById('btn').addEventListener('click', function () {
+    document.getElementById('t4').innerHTML = '<span class="ok">CLICK KAAM KAR RAHA HAI ✓</span>';
+  });
+  // Test 3: IndexedDB
+  try {
+    var req = indexedDB.open('ggk-test-db', 1);
+    req.onsuccess = function () { document.getElementById('t3').innerHTML = '<span class="ok">OK ✓</span>'; req.result.close(); };
+    req.onerror = function () { document.getElementById('t3').innerHTML = '<span class="bad">FAIL ✗ ' + (req.error ? req.error.message : '') + '</span>'; };
+  } catch (e) {
+    document.getElementById('t3').innerHTML = '<span class="bad">FAIL ✗ ' + e.message + '</span>';
+  }
+  // Test 2 timeout: agar module 15 sec mein jawab na de to CDN fail
+  setTimeout(function () {
+    var el = document.getElementById('t2');
+    if (el.dataset.done !== '1') el.innerHTML = '<span class="bad">FAIL ✗ (Firebase load nahi hua — internet/CDN rukawat)</span>';
+  }, 15000);
+  window.addEventListener('error', function (e) {
+    var el = document.getElementById('t2');
+    if (el.dataset.done !== '1' && e.message) {
+      el.dataset.done = '1';
+      el.innerHTML = '<span class="bad">ERROR ✗ ' + e.message + '</span>';
+    }
+  }, true);
+</script>
+
+<script type="module">
+  // Test 2: bilkul waisa hi Firebase import jaisa asal app mein hai
+  try {
+    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { getFirestore, initializeFirestore, persistentLocalCache } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    const el = document.getElementById('t2');
+    el.dataset.done = '1';
+    try {
+      const app = initializeApp({ apiKey: 'AIzaSyCgs73z8meCD6CoAuT1aUen4BRXG5RVDP8', projectId: 'gg-khata', appId: '1:929259188132:web:964dcd1eb792d708539b31' });
+      initializeFirestore(app, { localCache: persistentLocalCache({}) });
+      el.innerHTML = '<span class="ok">OK ✓ (Firebase + offline storage dono theek)</span>';
+    } catch (e2) {
+      el.innerHTML = '<span class="bad">Firebase load OK, lekin offline storage FAIL ✗ ' + e2.message + '</span>';
+    }
+  } catch (e) {
+    const el = document.getElementById('t2');
+    el.dataset.done = '1';
+    el.innerHTML = '<span class="bad">FAIL ✗ ' + e.message + '</span>';
+  }
+</script>
+</body>
+</html>
