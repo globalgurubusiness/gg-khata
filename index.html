@@ -28,7 +28,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
-      getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier 
+      getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier, signInWithRedirect, getRedirectResult 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import {
       initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
@@ -697,8 +697,21 @@
 
     window.loginGoogle = () => {
       playSound('tap');
-      signInWithPopup(auth, provider).catch(err => showToast("Login Error: " + err.message, 'error'));
+      // Installed app (APK/PWA) ke andar popup khulta hi nahi — wahan redirect wala tareeqa sahi chalta hai.
+      const inInstalledApp = window.matchMedia('(display-mode: standalone)').matches ||
+        window.matchMedia('(display-mode: fullscreen)').matches ||
+        (document.referrer || '').startsWith('android-app://');
+      if (inInstalledApp) {
+        signInWithRedirect(auth, provider).catch(err => showToast("Login Error: " + err.message, 'error'));
+      } else {
+        signInWithPopup(auth, provider).catch(err => showToast("Login Error: " + err.message, 'error'));
+      }
     };
+
+    // Redirect login ka natija (installed app se wapas aane par)
+    getRedirectResult(auth).catch(err => {
+      if (err) showToast("Login Error: " + err.message, 'error');
+    });
 
     window.logout = () => {
       playSound('tap');
