@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- GG Khata Clone - Single-File Frontend v4.0 (Basic Free + Universal Search + Pro Demo) -->
+<!-- GG Khata Clone - Single-File Frontend v4.1 (Basic Free + Pro Demo Features) -->
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
@@ -737,25 +737,31 @@
       const ledgerView = document.getElementById('view-ledger');
       const accountsView = document.getElementById('view-accounts');
       const settingsView = document.getElementById('view-settings');
+      const proView = document.getElementById('view-pro');
       const tabLedgerBtn = document.getElementById('tab-btn-ledger');
       const tabAccountsBtn = document.getElementById('tab-btn-accounts');
       const tabSettingsBtn = document.getElementById('tab-btn-settings');
+      const tabProBtn = document.getElementById('tab-btn-pro');
       const dTabLedgerBtn = document.getElementById('d-tab-btn-ledger');
       const dTabAccountsBtn = document.getElementById('d-tab-btn-accounts');
       const dTabSettingsBtn = document.getElementById('d-tab-btn-settings');
+      const dTabProBtn = document.getElementById('d-tab-btn-pro');
       ledgerView.classList.add('hidden');
       accountsView.classList.add('hidden');
       settingsView.classList.add('hidden');
+      if (proView) proView.classList.add('hidden');
       const inactiveMob = "flex-1 py-2.5 text-center text-slate-400 font-semibold text-xs flex flex-col items-center gap-1 border-t-2 border-transparent hover:text-slate-600 transition";
       const activeMob = "flex-1 py-2.5 text-center text-emerald-700 font-extrabold text-xs flex flex-col items-center gap-1 border-t-2 border-emerald-600 transition";
       tabLedgerBtn.className = inactiveMob;
       tabAccountsBtn.className = inactiveMob;
       tabSettingsBtn.className = inactiveMob;
+      if (tabProBtn) tabProBtn.className = inactiveMob;
       const inactiveDesk = "w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 font-bold text-sm hover:bg-slate-100 transition";
       const activeDesk = "w-full flex items-center gap-3 px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-800 font-extrabold text-sm shadow-sm transition";
       if (dTabLedgerBtn) dTabLedgerBtn.className = inactiveDesk;
       if (dTabAccountsBtn) dTabAccountsBtn.className = inactiveDesk;
       if (dTabSettingsBtn) dTabSettingsBtn.className = inactiveDesk;
+      if (dTabProBtn) dTabProBtn.className = inactiveDesk;
       if (tab === 'ledger') {
         ledgerView.classList.remove('hidden');
         tabLedgerBtn.className = activeMob;
@@ -770,6 +776,11 @@
         settingsView.classList.remove('hidden');
         tabSettingsBtn.className = activeMob;
         if (dTabSettingsBtn) dTabSettingsBtn.className = activeDesk;
+      } else if (tab === 'pro') {
+        if (proView) proView.classList.remove('hidden');
+        if (tabProBtn) tabProBtn.className = activeMob;
+        if (dTabProBtn) dTabProBtn.className = activeDesk;
+        if (typeof window.renderProView === 'function') window.renderProView();
       }
     };
     function loadCustomers() {
@@ -2531,6 +2542,9 @@
           <button id="d-tab-btn-settings" onclick="switchTab('settings')" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 font-bold text-sm hover:bg-slate-100 transition">
             <span class="text-lg">⚙️</span> Settings & Profile
           </button>
+          <button id="d-tab-btn-pro" onclick="switchTab('pro')" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-600 font-bold text-sm hover:bg-slate-100 transition">
+            <span class="text-lg">⭐</span> Pro Features
+          </button>
         </nav>
       </div>
       <div class="pt-4 border-t border-slate-100">
@@ -2974,6 +2988,130 @@
           </div>
         </div>
       </div>
+<div id="view-pro" class="hidden flex-1 p-4 md:p-6 pb-20 md:pb-6 space-y-4 overflow-y-auto bg-slate-50">
+        <div class="max-w-2xl mx-auto space-y-4">
+          <div id="pro-lock" class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">🔒 Pro Features</h4>
+              <span class="text-[10px] font-black bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">Pro - Paid</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Ye 9 advance features Pro (paid) me hain. Demo dekhne ke liye neeche wala button dabayein.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Stock - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Expense - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Monthly/Profit Report - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Chart - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Staff - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Multi-branch - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 AI - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Bank Import - Pro</span>
+              <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200">🔒 Barcode - Pro</span>
+            </div>
+            <a href="https://wa.me/923027374880?text=I%20want%20GG%20Khata%20Pro" target="_blank" class="w-full flex items-center justify-center py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition active:scale-95">Upgrade to Pro on WhatsApp →</a>
+            <button onclick="toggleDemoPro()" class="w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-sm transition active:scale-95">👀 Try Pro Demo</button>
+          </div>
+          <div id="pro-demo" class="hidden space-y-4">
+            <div class="bg-emerald-600 text-white p-4 rounded-3xl shadow-sm">
+              <h3 class="text-sm font-black">⭐ Pro Plan • Active (Demo)</h3>
+              <p class="text-[11px] text-emerald-100 mt-0.5">Demo data hai - sirf is phone par save hota hai, real khata ko kuch nahi hota. Wapas Free par jane ke liye Settings &gt; Plan me "Back to Free Demo" dabayein.</p>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">📦 Stock - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <div class="grid grid-cols-3 gap-2">
+                <input type="text" id="pro-stock-name" placeholder="Product name" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <input type="number" id="pro-stock-qty" placeholder="Qty" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <input type="number" id="pro-stock-price" placeholder="Price Rs." class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+              </div>
+              <button onclick="addDemoStock()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">+ Add Product</button>
+              <div id="pro-stock-list" class="space-y-1.5"></div>
+              <p id="pro-stock-total" class="text-[11px] font-bold text-slate-500"></p>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">💸 Expense - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="pro-exp-title" placeholder="Expense title" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <select id="pro-exp-cat" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500"><option>Shop</option><option>Kiraya</option><option>Bijli</option><option>Transport</option><option>Other</option></select>
+                <input type="number" id="pro-exp-amount" placeholder="Amount Rs." class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <input type="date" id="pro-exp-date" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+              </div>
+              <button onclick="addDemoExpense()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition active:scale-95">+ Add Expense</button>
+              <div id="pro-exp-list" class="space-y-1.5"></div>
+              <p id="pro-exp-total" class="text-[11px] font-bold text-slate-500"></p>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">📊 Monthly / Profit Report - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <div class="flex gap-2">
+                <input type="month" id="pro-report-month" class="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <button onclick="renderProReport()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">Show</button>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-100"><p class="text-[10px] font-bold text-emerald-700 uppercase">Total In</p><p id="pro-rep-in" class="text-sm font-black text-emerald-600 mt-1">Rs. 0</p></div>
+                <div class="bg-rose-50 p-3 rounded-2xl border border-rose-100"><p class="text-[10px] font-bold text-rose-700 uppercase">Total Out</p><p id="pro-rep-out" class="text-sm font-black text-rose-600 mt-1">Rs. 0</p></div>
+                <div class="bg-amber-50 p-3 rounded-2xl border border-amber-100"><p class="text-[10px] font-bold text-amber-700 uppercase">Expense</p><p id="pro-rep-exp" class="text-sm font-black text-amber-600 mt-1">Rs. 0</p></div>
+                <div class="bg-slate-900 p-3 rounded-2xl"><p class="text-[10px] font-bold text-emerald-400 uppercase">Profit</p><p id="pro-rep-profit" class="text-sm font-black text-white mt-1">Rs. 0</p></div>
+              </div>
+              <p id="pro-rep-note" class="text-[11px] text-slate-400"></p>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">📈 Chart - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <p class="text-[11px] text-slate-400">Last 6 months - Cash In (green) vs Cash Out (rose). Demo data.</p>
+              <div id="pro-chart-bars" class="flex items-end gap-2 h-36 pt-2"></div>
+              <div id="pro-chart-labels" class="flex gap-2 text-center"></div>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">👥 Staff - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <div class="grid grid-cols-3 gap-2">
+                <input type="text" id="pro-staff-name" placeholder="Staff name" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <input type="text" id="pro-staff-role" placeholder="Role" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <input type="password" id="pro-staff-pin" placeholder="PIN (4 digit)" maxlength="4" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+              </div>
+              <button onclick="addDemoStaff()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">+ Add Staff</button>
+              <div id="pro-staff-list" class="space-y-1.5"></div>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">🏪 Multi-branch - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="pro-branch-name" placeholder="Branch name" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <input type="text" id="pro-branch-city" placeholder="City" class="text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+              </div>
+              <button onclick="addDemoBranch()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">+ Add Branch</button>
+              <p id="pro-branch-current" class="text-[11px] font-bold text-slate-500"></p>
+              <div id="pro-branch-list" class="space-y-1.5"></div>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">🤖 AI Assistant - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <p class="text-[11px] text-slate-400">Sawal likhein: "kitna lena hai", "aaj kitna aaya", "top customer", "profit kitna hai".</p>
+              <div class="flex gap-2">
+                <input type="text" id="pro-ai-input" onkeydown="if(event.key==='Enter') askDemoAI()" placeholder="Apna sawal likhein..." class="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <button onclick="askDemoAI()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">Ask</button>
+              </div>
+              <div id="pro-ai-answer" class="bg-slate-50 border border-slate-100 rounded-2xl p-3 text-xs font-bold text-slate-700">AI tayyar hai. Sawal likh kar Ask dabayein.</div>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">🏦 Bank Import - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <p class="text-[11px] text-slate-400">CSV file chunein (date, description, amount). Import sirf demo list me hoga, real khata me nahi.</p>
+              <input type="file" id="pro-bank-file" accept=".csv" onchange="handleDemoBankImport(event)" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+              <button onclick="importDemoBank()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">Import as Demo</button>
+              <div id="pro-bank-preview" class="overflow-x-auto"></div>
+              <div id="pro-bank-list" class="space-y-1.5"></div>
+            </div>
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">🔳 Barcode - Pro <span class="text-[9px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Demo</span></h4>
+              <div class="flex gap-2">
+                <input type="text" id="pro-barcode-code" placeholder="Product name ya code" class="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <button onclick="generateDemoBarcode()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition active:scale-95">Generate</button>
+              </div>
+              <div id="pro-barcode-display" class="bg-white border border-slate-200 rounded-2xl p-3 text-center min-h-[60px]"></div>
+              <div class="flex gap-2">
+                <input type="text" id="pro-barcode-scan" onkeydown="if(event.key==='Enter') scanDemoBarcode()" placeholder="Scan / type code..." class="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-500">
+                <button onclick="scanDemoBarcode()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition active:scale-95">Scan</button>
+              </div>
+              <div id="pro-barcode-result" class="text-xs font-bold text-slate-700"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <nav class="md:hidden fixed bottom-0 max-w-md w-full bg-white border-t border-slate-200 flex z-30 shadow-lg">
       <button id="tab-btn-ledger" onclick="switchTab('ledger')" class="flex-1 py-2.5 text-center text-emerald-700 font-extrabold text-xs flex flex-col items-center gap-1 border-t-2 border-emerald-600 transition">
@@ -2984,6 +3122,9 @@
       </button>
       <button id="tab-btn-settings" onclick="switchTab('settings')" class="flex-1 py-2.5 text-center text-slate-400 font-semibold text-xs flex flex-col items-center gap-1 border-t-2 border-transparent hover:text-slate-600 transition">
         <span class="text-base">⚙️</span> Settings
+      </button>
+      <button id="tab-btn-pro" onclick="switchTab('pro')" class="flex-1 py-2.5 text-center text-slate-400 font-semibold text-xs flex flex-col items-center gap-1 border-t-2 border-transparent hover:text-slate-600 transition">
+        <span class="text-base">⭐</span> Pro
       </button>
     </nav>
   </div>
@@ -3339,6 +3480,145 @@
         if (on) { el.textContent = el.textContent.replace('🔒 ', '✅ '); el.className = 'pro-feature text-[10px] font-bold bg-emerald-50 text-emerald-800 px-2 py-1 rounded-md border border-emerald-100'; }
         else { el.textContent = el.textContent.replace('✅ ', '🔒 '); el.className = 'pro-feature text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded-md border border-slate-200'; }
       });
+      if (typeof window.renderProView === 'function') window.renderProView();
+    };
+    window.proEsc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    window.proToast = (m, t) => { if (window.showToast) window.showToast(m, t || 'success'); };
+    window.proNum = (id) => { const el = document.getElementById(id); if (!el) return 0; const n = Number(String(el.textContent || '').replace(/[^0-9.-]/g, '')); return isNaN(n) ? 0 : n; };
+    window.proLoad = (k, seed) => { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); if (Array.isArray(v)) return v; } catch (e) {} const s = seed.slice(); localStorage.setItem(k, JSON.stringify(s)); return s; };
+    window.proSave = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+    window.renderProView = () => {
+      const on = localStorage.getItem('gg_demo_pro') === '1';
+      const lock = document.getElementById('pro-lock');
+      const demo = document.getElementById('pro-demo');
+      if (lock) lock.classList.toggle('hidden', on);
+      if (demo) demo.classList.toggle('hidden', !on);
+      if (!on) return;
+      renderDemoStock(); renderDemoExpense(); renderProReport(); renderProChart(); renderDemoStaff(); renderDemoBranch(); renderDemoBankList();
+      const m = document.getElementById('pro-report-month'); if (m && !m.value) { const d = new Date(); m.value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+    };
+    window.renderDemoStock = () => {
+      const list = window.proLoad('gg_demo_stock', [{ name: 'Chai Patti 500g', qty: 12, price: 850 }, { name: 'Cheeni 1kg', qty: 3, price: 180 }, { name: 'Oil 1L', qty: 20, price: 620 }]);
+      const el = document.getElementById('pro-stock-list'); if (!el) return;
+      let total = 0;
+      el.innerHTML = list.map((p, i) => { total += Number(p.qty || 0) * Number(p.price || 0); const low = Number(p.qty) < 5; return '<div class="flex items-center justify-between bg-slate-50 border ' + (low ? 'border-rose-200' : 'border-slate-100') + ' rounded-xl px-3 py-2"><div><p class="text-xs font-bold text-slate-800">' + window.proEsc(p.name) + (low ? ' <span class="text-[9px] font-bold bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded">LOW STOCK</span>' : '') + '</p><p class="text-[10px] text-slate-400">Qty: ' + window.proEsc(p.qty) + ' x Rs. ' + Number(p.price || 0).toLocaleString() + '</p></div><button onclick="deleteDemoStock(' + i + ')" class="text-rose-500 font-bold text-xs px-2">Delete</button></div>'; }).join('') || '<p class="text-[11px] text-slate-400">Koi product nahi hai.</p>';
+      const t = document.getElementById('pro-stock-total'); if (t) t.textContent = list.length + ' products | Stock value: Rs. ' + total.toLocaleString() + ' (Demo)';
+    };
+    window.addDemoStock = () => {
+      const n = document.getElementById('pro-stock-name'), q = document.getElementById('pro-stock-qty'), pr = document.getElementById('pro-stock-price');
+      if (!n || !n.value.trim()) { window.proToast('Product name likhein', 'error'); return; }
+      const list = window.proLoad('gg_demo_stock', []); list.push({ name: n.value.trim(), qty: Number(q.value || 0), price: Number(pr.value || 0) }); window.proSave('gg_demo_stock', list);
+      n.value = ''; q.value = ''; pr.value = ''; renderDemoStock(); window.proToast('Product add ho gaya (Demo)');
+    };
+    window.deleteDemoStock = (i) => { const list = window.proLoad('gg_demo_stock', []); list.splice(i, 1); window.proSave('gg_demo_stock', list); renderDemoStock(); };
+    window.renderDemoExpense = () => {
+      const list = window.proLoad('gg_demo_expense', [{ title: 'Dukaan Kiraya', cat: 'Kiraya', amount: 15000, date: new Date().toISOString().slice(0, 10) }, { title: 'Bijli Bill', cat: 'Bijli', amount: 4200, date: new Date().toISOString().slice(0, 10) }, { title: 'Chai / Nashta', cat: 'Shop', amount: 850, date: new Date().toISOString().slice(0, 10) }]);
+      const el = document.getElementById('pro-exp-list'); if (!el) return;
+      let total = 0;
+      el.innerHTML = list.map((e, i) => { total += Number(e.amount || 0); return '<div class="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-xl px-3 py-2"><div><p class="text-xs font-bold text-slate-800">' + window.proEsc(e.title) + '</p><p class="text-[10px] text-slate-400">' + window.proEsc(e.cat) + ' | ' + window.proEsc(e.date) + '</p></div><div class="flex items-center gap-2"><span class="text-xs font-black text-rose-600">Rs. ' + Number(e.amount || 0).toLocaleString() + '</span><button onclick="deleteDemoExpense(' + i + ')" class="text-rose-500 font-bold text-xs px-2">Delete</button></div></div>'; }).join('') || '<p class="text-[11px] text-slate-400">Koi expense nahi hai.</p>';
+      const t = document.getElementById('pro-exp-total'); if (t) t.textContent = 'Total expense (Demo): Rs. ' + total.toLocaleString();
+    };
+    window.addDemoExpense = () => {
+      const ti = document.getElementById('pro-exp-title'), am = document.getElementById('pro-exp-amount'), ca = document.getElementById('pro-exp-cat'), da = document.getElementById('pro-exp-date');
+      if (!ti || !ti.value.trim() || !Number(am.value)) { window.proToast('Title aur amount likhein', 'error'); return; }
+      const list = window.proLoad('gg_demo_expense', []); list.push({ title: ti.value.trim(), cat: ca ? ca.value : 'Other', amount: Number(am.value), date: da && da.value ? da.value : new Date().toISOString().slice(0, 10) }); window.proSave('gg_demo_expense', list);
+      ti.value = ''; am.value = ''; renderDemoExpense(); renderProReport(); window.proToast('Expense add ho gaya (Demo)');
+    };
+    window.deleteDemoExpense = (i) => { const list = window.proLoad('gg_demo_expense', []); list.splice(i, 1); window.proSave('gg_demo_expense', list); renderDemoExpense(); renderProReport(); };
+    window.renderProReport = () => {
+      const m = document.getElementById('pro-report-month'); const month = m && m.value ? m.value : new Date().toISOString().slice(0, 7);
+      const demo = { '2026-06': [82000, 61000], '2026-07': [95000, 70000], '2026-08': [88000, 64000], '2026-09': [102000, 78000], '2026-10': [110000, 82000], '2026-11': [97000, 73000] };
+      const cur = new Date().toISOString().slice(0, 7);
+      let tin = 0, tout = 0;
+      if (month === cur) { tin = window.proNum('galla-strip-in'); tout = window.proNum('galla-strip-out'); if (!tin && !tout) { tin = 97000; tout = 73000; } }
+      else if (demo[month]) { tin = demo[month][0]; tout = demo[month][1]; }
+      else { tin = 90000; tout = 68000; }
+      const exps = window.proLoad('gg_demo_expense', []); const exp = exps.reduce((s, e) => s + Number(e.amount || 0), 0);
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = 'Rs. ' + Number(v).toLocaleString(); };
+      set('pro-rep-in', tin); set('pro-rep-out', tout); set('pro-rep-exp', exp); set('pro-rep-profit', tin - tout - exp);
+      const n = document.getElementById('pro-rep-note'); if (n) n.textContent = month === cur ? 'Is month ke In/Out aaj ke live Galla se liye gaye hain, baqi months demo data hain. Expense demo list se hai.' : 'Demo data - is month ke liye sample totals dikhaye gaye hain. Expense demo list se hai.';
+    };
+    window.renderProChart = () => {
+      const data = [{ m: 'Jun', i: 82, o: 61 }, { m: 'Jul', i: 95, o: 70 }, { m: 'Aug', i: 88, o: 64 }, { m: 'Sep', i: 102, o: 78 }, { m: 'Oct', i: 110, o: 82 }, { m: 'Nov', i: 97, o: 73 }];
+      const max = 110;
+      const bars = document.getElementById('pro-chart-bars'); const labels = document.getElementById('pro-chart-labels');
+      if (bars) bars.innerHTML = data.map(d => '<div class="flex-1 flex items-end justify-center gap-1 h-full"><div class="w-4 bg-emerald-500 rounded-t" style="height:' + Math.round(d.i / max * 100) + '%" title="In ' + d.i + 'k"></div><div class="w-4 bg-rose-400 rounded-t" style="height:' + Math.round(d.o / max * 100) + '%" title="Out ' + d.o + 'k"></div></div>').join('');
+      if (labels) labels.innerHTML = data.map(d => '<div class="flex-1 text-[10px] font-bold text-slate-500">' + d.m + '<br><span class="text-emerald-600">' + d.i + 'k</span> / <span class="text-rose-500">' + d.o + 'k</span></div>').join('');
+    };
+    window.renderDemoStaff = () => {
+      const list = window.proLoad('gg_demo_staff', [{ name: 'Ahmed', role: 'Cashier', pin: '1234' }, { name: 'Bilal', role: 'Helper', pin: '5678' }]);
+      const el = document.getElementById('pro-staff-list'); if (!el) return;
+      el.innerHTML = list.map((s, i) => '<div class="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-xl px-3 py-2"><div><p class="text-xs font-bold text-slate-800">' + window.proEsc(s.name) + '</p><p class="text-[10px] text-slate-400">' + window.proEsc(s.role) + ' | PIN: ' + window.proEsc(s.pin) + '</p></div><button onclick="deleteDemoStaff(' + i + ')" class="text-rose-500 font-bold text-xs px-2">Delete</button></div>').join('') || '<p class="text-[11px] text-slate-400">Koi staff nahi hai.</p>';
+    };
+    window.addDemoStaff = () => {
+      const n = document.getElementById('pro-staff-name'), r = document.getElementById('pro-staff-role'), p = document.getElementById('pro-staff-pin');
+      if (!n || !n.value.trim()) { window.proToast('Staff name likhein', 'error'); return; }
+      const list = window.proLoad('gg_demo_staff', []); list.push({ name: n.value.trim(), role: r ? r.value.trim() || 'Staff' : 'Staff', pin: p ? p.value.trim() || '----' : '----' }); window.proSave('gg_demo_staff', list);
+      n.value = ''; if (r) r.value = ''; if (p) p.value = ''; renderDemoStaff(); window.proToast('Staff add ho gaya (Demo)');
+    };
+    window.deleteDemoStaff = (i) => { const list = window.proLoad('gg_demo_staff', []); list.splice(i, 1); window.proSave('gg_demo_staff', list); renderDemoStaff(); };
+    window.renderDemoBranch = () => {
+      const list = window.proLoad('gg_demo_branch', [{ name: 'Main Branch', city: 'Lahore' }, { name: 'Branch 2', city: 'Karachi' }]);
+      const cur = localStorage.getItem('gg_demo_branch_current') || 'Main Branch';
+      const el = document.getElementById('pro-branch-list'); if (!el) return;
+      el.innerHTML = list.map((b) => '<div class="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-xl px-3 py-2"><div><p class="text-xs font-bold text-slate-800">' + window.proEsc(b.name) + '</p><p class="text-[10px] text-slate-400">' + window.proEsc(b.city) + '</p></div><button onclick="switchDemoBranch(\'' + window.proEsc(b.name).replace(/'/g, '') + '\')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-[11px] font-bold">Switch</button></div>').join('');
+      const c = document.getElementById('pro-branch-current'); if (c) c.textContent = 'Current branch (Demo): ' + cur;
+    };
+    window.addDemoBranch = () => {
+      const n = document.getElementById('pro-branch-name'), c = document.getElementById('pro-branch-city');
+      if (!n || !n.value.trim()) { window.proToast('Branch name likhein', 'error'); return; }
+      const list = window.proLoad('gg_demo_branch', []); list.push({ name: n.value.trim(), city: c ? c.value.trim() || '-' : '-' }); window.proSave('gg_demo_branch', list);
+      n.value = ''; if (c) c.value = ''; renderDemoBranch(); window.proToast('Branch add ho gaya (Demo)');
+    };
+    window.switchDemoBranch = (name) => { localStorage.setItem('gg_demo_branch_current', name); renderDemoBranch(); window.proToast('Switched to ' + name + ' (Demo)'); };
+    window.askDemoAI = () => {
+      const inp = document.getElementById('pro-ai-input'); const ans = document.getElementById('pro-ai-answer'); if (!inp || !ans) return;
+      const q = inp.value.toLowerCase();
+      const rec = window.proNum('total-receivable'), pay = window.proNum('total-payable'), tin = window.proNum('galla-strip-in'), tout = window.proNum('galla-strip-out'), close = window.proNum('galla-strip-closing');
+      let a = '';
+      if (q.includes('lena') || q.includes('receiv') || q.includes('kitna lena')) a = 'Aap ko kul Rs. ' + rec.toLocaleString() + ' lene hain (Total Receivable).';
+      else if (q.includes('dena') || q.includes('payable') || q.includes('kitna dena')) a = 'Aap ko kul Rs. ' + pay.toLocaleString() + ' dene hain (Total Payable).';
+      else if (q.includes('aaj') && (q.includes('aaya') || q.includes('cash in') || q.includes('in'))) a = 'Aaj Cash In Rs. ' + tin.toLocaleString() + ' hai, Cash Out Rs. ' + tout.toLocaleString() + ' hai, Closing Rs. ' + close.toLocaleString() + ' hai.';
+      else if (q.includes('profit')) a = 'Profit dekhne ke liye Monthly / Profit Report card me month select karein. Demo me is month ka profit In - Out - Expense se nikalta hai.';
+      else if (q.includes('stock')) a = 'Stock card me ' + (window.proLoad('gg_demo_stock', []).length) + ' products hain (Demo). Low stock wale rose rang me dikhte hain.';
+      else if (q.includes('top') || q.includes('customer')) a = 'Top customer ka pata Khata tab me Total Receivable se chalta hai. Kul receivable Rs. ' + rec.toLocaleString() + ' hai.';
+      else a = 'Demo AI: Main aap ko lena/dena, aaj ka cash, profit aur stock ke baare me bata sakta hun. Sawal me "kitna lena hai", "aaj kitna aaya" ya "profit" likhein.';
+      ans.textContent = a + ' (Demo AI)';
+    };
+    window.proBankRows = [];
+    window.handleDemoBankImport = (ev) => {
+      const f = ev.target.files && ev.target.files[0]; if (!f) return;
+      const r = new FileReader();
+      r.onload = () => {
+        const lines = String(r.result || '').split(/\r?\n/).filter(l => l.trim());
+        window.proBankRows = lines.slice(0, 20).map(l => { const p = l.split(','); return { date: (p[0] || '').trim(), desc: (p[1] || '').trim(), amount: Number((p[2] || '').replace(/[^0-9.-]/g, '')) || 0 }; });
+        const pv = document.getElementById('pro-bank-preview'); if (pv) pv.innerHTML = '<table class="w-full text-left text-xs"><thead><tr class="text-[10px] uppercase text-slate-400"><th class="p-2">Date</th><th class="p-2">Description</th><th class="p-2 text-right">Amount</th></tr></thead><tbody>' + window.proBankRows.map(x => '<tr class="border-t border-slate-100"><td class="p-2">' + window.proEsc(x.date) + '</td><td class="p-2">' + window.proEsc(x.desc) + '</td><td class="p-2 text-right font-bold">Rs. ' + x.amount.toLocaleString() + '</td></tr>').join('') + '</tbody></table>';
+      };
+      r.readAsText(f);
+    };
+    window.importDemoBank = () => {
+      if (!window.proBankRows.length) { window.proToast('Pehle CSV file chunein', 'error'); return; }
+      window.proSave('gg_demo_bank_import', window.proBankRows); renderDemoBankList(); window.proToast(window.proBankRows.length + ' entries import ho gayi (Demo)');
+    };
+    window.renderDemoBankList = () => {
+      const list = window.proLoad('gg_demo_bank_import', []);
+      const el = document.getElementById('pro-bank-list'); if (!el) return;
+      el.innerHTML = list.length ? list.map(x => '<div class="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-xl px-3 py-2"><div><p class="text-xs font-bold text-slate-800">' + window.proEsc(x.desc) + '</p><p class="text-[10px] text-slate-400">' + window.proEsc(x.date) + ' (Imported - Demo)</p></div><span class="text-xs font-black text-emerald-600">Rs. ' + Number(x.amount || 0).toLocaleString() + '</span></div>').join('') : '<p class="text-[11px] text-slate-400">Abhi koi bank import nahi hai.</p>';
+    };
+    window.generateDemoBarcode = () => {
+      const inp = document.getElementById('pro-barcode-code'); const disp = document.getElementById('pro-barcode-display'); if (!inp || !disp) return;
+      const code = inp.value.trim() || 'GG12345';
+      let bars = '', h = 0; for (let i = 0; i < code.length; i++) h = (h * 31 + code.charCodeAt(i)) % 100000;
+      let seed = h || 12345;
+      for (let i = 0; i < 40; i++) { seed = (seed * 9301 + 49297) % 233280; const w = 2 + (seed % 4); bars += '<span style="display:inline-block;width:' + w + 'px;height:48px;background:#111;margin-right:2px;vertical-align:bottom"></span>'; }
+      disp.innerHTML = '<div>' + bars + '</div><p class="text-xs font-black tracking-widest mt-2">' + window.proEsc(code) + '</p><p class="text-[10px] text-slate-400">Barcode (Demo) - ' + window.proEsc(code) + '</p>';
+    };
+    window.scanDemoBarcode = () => {
+      const inp = document.getElementById('pro-barcode-scan'); const res = document.getElementById('pro-barcode-result'); if (!inp || !res) return;
+      const q = inp.value.trim().toLowerCase(); if (!q) { res.textContent = 'Code likhein ya scan karein.'; return; }
+      const stock = window.proLoad('gg_demo_stock', []);
+      const found = stock.find(p => String(p.name).toLowerCase().includes(q) || String(p.name).toLowerCase().replace(/[^a-z0-9]/g, '').includes(q.replace(/[^a-z0-9]/g, '')));
+      res.textContent = found ? 'Mil gaya (Demo): ' + found.name + ' | Qty: ' + found.qty + ' | Price: Rs. ' + Number(found.price || 0).toLocaleString() : 'Is code ka product demo stock me nahi mila: ' + inp.value.trim() + ' (Demo)';
     };
     try { applyDemoPro(); } catch (e) {}
 </script>
